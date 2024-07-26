@@ -10,12 +10,16 @@
       @reveal="revealCell(index)"
       @toggle-flag="toggleFlag(index)"
     />
+    <GameOverModel v-if="gameOver" />
   </div>
 </template>
 
 <script setup lang="ts">
 import Chunk from "./Chunk.vue";
-import { reactive, onMounted } from "vue";
+import GameOverModel from "./GameOverModel.vue";
+import { ref, reactive, onMounted } from "vue";
+
+const gameOver = ref(false);
 
 const role = reactive({
   rows: 20,
@@ -84,8 +88,9 @@ function revealCell(index: number) {
   cell.revealed = true;
   if (cell.bomb) {
     // 處理地雷
-    alert("Game Over!");
-    initBoard();
+    revealCell(index);
+    gameOver.value = true;
+    // initBoard();
   } else if (cell.adjacentBombs === 0) {
     // 自動揭示相鄰空白單元格
     getAdjacentCells(index).forEach((adjIndex) => {

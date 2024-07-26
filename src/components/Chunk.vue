@@ -4,9 +4,9 @@
     @click="revealCell"
     @contextmenu.prevent="toggleFlag"
   >
-    <span v-if="revealed && !bomb">{{ chunkText }}</span>
-    <span v-if="flagged">🚩</span>
-    <span v-if="revealed && bomb">💣</span>
+    <span v-if="revealed && !bomb" class="text-cell">{{ chunkText }}</span>
+    <span v-if="flagged" class="flag-cell">🚩</span>
+    <span v-if="revealed && bomb" class="bomb-cell">💣</span>
   </div>
 </template>
 
@@ -48,8 +48,8 @@ function toggleFlag() {
 
 <style scoped>
 .cell {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border: 5px solid;
   border-color: #f0f0f0 #999 #999 #f0f0f0;
   display: flex;
@@ -61,9 +61,32 @@ function toggleFlag() {
 }
 .revealed {
   background-color: #c9c9c9;
+  width: 38px;
+  height: 38px;
   border: 1px solid #444;
 }
-.bomb {
-  background-color: #d8d8d8;
+.revealed.bomb {
+  background-color: #ff2222;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #444;
+}
+.flagged {
+  background-color: #ffc558;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #444;
+}
+.text-cell {
+  font-size: 1.25rem;
+  font-weight: 900;
+  font-family: "Black Ops One", system-ui;
+  color: #222dff;
+}
+.flag-cell {
+  font-size: 1.25rem;
+}
+.bomb-cell {
+  font-size: 1.25rem;
 }
 </style>
